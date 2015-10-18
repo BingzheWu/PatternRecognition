@@ -1,0 +1,73 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Wu Bingzhe\\1200010666\\The school of mathmatical science}
+\title{Pattern Recognition Report3\\Chapter3}
+\begin{document}
+	\maketitle
+	\section{Question1}
+    In my program of this question,function u1.m compute question(a),u2.m for question(b)
+    ,u3.m for question(c),u4.m for question(d).
+    \subsection{(a)}
+		According to the maximum likelihood estimation on the Gaussian distribution,we can 
+		get :
+		\begin{equation}
+			\hat{\mu}=\dfrac{1}{N}\sigma_{k=1}{N}x_k
+		\end{equation}	
+		\begin{equation}
+			\hat{\Sigma}=\dfrac{1}{N}\Sigma_{k=1}^{N}(x_k-\hat{\mu})(x_k-\hat{\mu})^{T}
+		\end{equation}
+		In terms of (1) and (2),we could compute the value of the parameters 
+		by the program . The results are as follows:
+	    \begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline  feature& $\hat{\mu}$  & $\hat{\sigma}^2$  \\ 
+			\hline  $x_1$& -0.0709 & 0.9062   \\ 
+			\hline  $x_2$&  -0.6047& 4.2007  \\ 
+			\hline  $x_3$&  -0.9110&  4.5419 \\ 
+			\hline 
+		\end{tabular} 
+		\end{center}	
+	\subsection{(b)}
+	Similar with (1) and (2),we can get the results as follows:
+	
+	$\mu_{12}=(-0.0709,-0.6047)^T$ \ $\Sigma_{12}=$
+	$\begin{array}{cc}
+		0.9062& 0.5678  \\ 
+	    0.5678& 4.2007 
+	\end{array} 
+	$
+	
+	$\mu_{23}=(-0.6047,-0.9110)^T$ \ $\Sigma_{23}=$
+	$\begin{array}{cc}
+	4.2007& 0.7337  \\ 
+	0.7337& 44.5419 
+	\end{array} 
+	$
+	
+	$\mu_{13}=(-0.0709,-0.9110)^T$ \ $\Sigma_{13}=$
+	$\begin{array}{cc}
+	0.9062& 0.3941  \\ 
+	0.3941& 4.5419 
+	\end{array} 
+	$
+	\subsection{(c)}
+	According to (1) and (2),we get the results as follows:
+	\begin{equation*}
+	\mu=(-0.0709,-0.6047,-0.9110)^T
+	\end{equation*}
+	\begin{equation*}
+	\Sigma=\begin{array}{ccc}
+	0.9062& 0.5678  & -0.9110  \\ 
+	0.5678& 4.2007 & 0.7337  \\ 
+	0.3941& 0.7337  &4.5419 
+	\end{array} 
+	\end{equation*}
+	\subsection{(d)}
+	
+	\subsection{(e)}
+	\subsection{(f)}
+\end{document}
