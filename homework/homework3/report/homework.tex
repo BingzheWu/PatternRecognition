@@ -1,0 +1,61 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\author{Wu Bingzhe\\1200010666\\The school of mathmatical science}
+\title{The Pattern Recogition 's homework}
+\begin{document}
+	\maketitle
+	\section{Ex 1}
+	
+	The log-likelihood function is:
+	\begin{equation}
+	L(\mu)=\ln p(\mathscr{K}|\mu)=\sum_{i=1}^{N}lnp(x_i|\mu)=\dfrac{1}{2}\sum_{i=1}^{N}(x_i-\mu)^2+C
+	\end{equation}
+	The derivation of $\L(\mu)$ ,we could get that :
+	\begin{equation*}
+	\dfrac{\partial L(\mu )}{\partial \mu}=\sum_{i=1}^{N}x_i-N\mu =0
+	\end{equation*}
+	So the maximum likelihood estimation of $\hat{\mu}=\dfrac{1}{N}\sum_{i=1}^{N}x_i$
+	
+	The bayesian estimation :
+	
+	First we get the posterior:
+	\begin{equation*}
+	\begin{split}
+	p(\mu|\mathscr{K})&=\dfrac{p(\mathscr{K}|\mu )p(\mu)}{\int p(\mathscr{K}|\mu )p(\mu)du}\\
+	&=\alpha \prod_{i=1}^{N}p(x_i|u)p(u)\\
+	&=\alpha\prod_{i=1}^{N}\dfrac{1}{\sqrt{2\pi}\sigma}exp[-\dfrac{(x_i-u)^2}{2\sigma^2}]\cdot\sqrt{2\pi}\sigma_0 exp[-\dfrac{(u-u_0)^2}{2\sigma_0^2}] \\
+	&=\alpha^{'}[-\dfrac{1}{2}[(\dfrac{N}{\sigma^2}+\dfrac{1}{\sigma_0^2})\mu^2-2(\dfrac{1}{\sigma^2}\sum_{i=1}^{N}x_i+\dfrac{\sigma_0}{\sigma_0^2})\mu ]]
+	\end{split}
+	\end{equation*}
+	According to the formula ,apply the method of undetermined coefficients ,we can get that :
+	\begin{equation*}
+	\hat{u} =\int\mu p(\mu|\mathscr{K})du=\int\mu\dfrac{1}{\sqrt{2\pi}\sigma_N}exp[-\dfrac{1}{2}(\dfrac{u-u_N}{\sigma_N})^2]du=u_N
+	\end{equation*}
+	Combine with $\sigma=1,u_0=0,\sigma_0=1$,we can get the bayesian estimation :
+	\begin{equation*}
+	\hat{\mu}=\dfrac{1}{N+1}\sum_{i=1}^{N}x_i
+	\end{equation*}
+	\section{Ex 2}
+	According to the theory of maximum likelihood estimation and derivation of EX1,
+	\begin{equation*}
+	l(\theta)=P(x|\theta)=\prod_{k=1}^{n}p(x_k|\theta)
+	\end{equation*}
+	\begin{equation*}
+	H(\theta)=\ln l(\theta)=\sum_{k=1}^{n}\ln p(x_k|\theta)=\sum_{k=1}^{n}\sum_{i=1}^{d}[x_{ki}ln(\theta_i)+(1-x_{ki}\ln(1-\theta_i))]
+	\end{equation*}
+	In terms of $0=\dfrac{\partial H(\theta)}{\partial \theta_i}=\sum_{k=1}^{n}[\dfrac{x_{ki}}{\theta_i}-\dfrac{1-x_{ki}}{1-\theta_i}]$
+	
+	We get that:
+	\begin{equation*}
+	\hat{\theta}=\dfrac{1}{n}\sum_{k=1}^{n}x_{ki},i=1,\cdots,d;
+	\end{equation*}
+	So,$\hat{\theta}=\dfrac{1}{n}\sum_{k=1}^{n}x_k$
+	\section{Ex3}
+	According to the theory of bayes estimation,
+	
+\end{document}
