@@ -86,6 +86,72 @@
 	\subsection{(f)}
 	According to the forms of (2).The results are the same.
 \section{Question2}
+In my program ,work3.m calculate the results.And the function $p(x_1,x_2,x_3,h)$ calculate the probability of  the point
+ $(x_1,x_2,x_3)$ in three distribution,and decision which class it is.
 \subsection{(a)}
+When $h=1$The results are:
+\begin{center}
+\begin{tabular}{|c|c|}
+	\hline point & class  \\ 
+	\hline $(0.5,1.0,0.0)^T$ & $\omega_2$  \\ 
+	\hline  $(0.31,1.51,-0.50)^T$&$\omega_2$  \\ 
+	\hline  $(-0.3,0.44,-0.1)^T$&$\omega_2$  \\ 
+	\hline 
+\end{tabular} 
+\end{center}
 \subsection{(b)}
+When $h=0.1$,the result are same with (a):
+\begin{center}
+	\begin{tabular}{|c|c|}
+		\hline point & class  \\ 
+		\hline $(0.5,1.0,0.0)^T$ & $\omega_2$  \\ 
+		\hline  $(0.31,1.51,-0.50)^T$&$\omega_2$  \\ 
+		\hline  $(-0.3,0.44,-0.1)^T$&$\omega_2$  \\ 
+		\hline 
+	\end{tabular} 
+\end{center}
+\section{Question3}
+In my program ,function $v1.m$ calculate the one-dimensional density estimation of the n samples.
+function $v2.m$ calculate the two-dimensional density estimation of the n samples.function $v3.m$
+calculate the probability of the point $(x_1,x_2,x_3)$ 
+\subsection{(a)}
+Let $k=1$,we get the image :
+
+\includegraphics[height=2in,width=4in]{1.png}
+
+Let $k=3$, we get that:
+
+\includegraphics[height=2in,width=4in]{2.png}
+
+Let $k=5$,we get that :
+
+\includegraphics[height=2in,width=4in]{3.png}
+\subsection{(b)}
+When $k=1$,we have:
+
+\includegraphics[height=2in,width=4in]{4.png}
+
+When $k=3$,we have :
+
+\includegraphics[height=2in,width=4in]{5.png}
+
+When $k=5$,we have:
+
+\includegraphics[height=2in,width=4in]{6.png}
+\subsection{(c)}
+Let $k=3$,we calculate the probability ,the results are follows:
+\begin{center}
+\begin{tabular}{|c|c|}
+	\hline $p_{11}$  & 0.0021  \\ 
+	\hline $p_{21}$ & 0.0553 \\ 
+	\hline  $p_{31}$ & 0.0358  \\ 
+	\hline $p_{12}$ & 0.0043  \\ 
+	\hline $p_{22}$ & 9.6478e-04  \\ 
+	\hline  $p_{32}$& 0.0021 \\ 
+	\hline  $p_{13}$& 0.0026  \\ 
+	\hline $p_{23}$ & 0.0869  \\ 
+	\hline $p_{33}$  & 0.0085  \\ 
+	\hline 
+\end{tabular} 
+\end{center}
 \end{document}

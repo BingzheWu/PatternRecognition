@@ -15,7 +15,7 @@
 	\begin{equation}
 	L(\mu)=\ln p(\mathscr{K}|\mu)=\sum_{i=1}^{N}lnp(x_i|\mu)=\dfrac{1}{2}\sum_{i=1}^{N}(x_i-\mu)^2+C
 	\end{equation}
-	The derivation of $\L(\mu)$ ,we could get that :
+	The derivation of $L(\mu)$ ,we could get that :
 	\begin{equation*}
 	\dfrac{\partial L(\mu )}{\partial \mu}=\sum_{i=1}^{N}x_i-N\mu =0
 	\end{equation*}
@@ -56,6 +56,69 @@
 	\end{equation*}
 	So,$\hat{\theta}=\dfrac{1}{n}\sum_{k=1}^{n}x_k$
 	\section{Ex3}
-	According to the theory of bayes estimation,
-	
+	According to the theory of bayes estimation,and the derivation of Ex1,the results of multivariate normal distribution is :
+    \begin{eqnarray}
+    \begin{cases}
+    \Sigma_N^{-1}=\Sigma_{0}^{-1}+N\Sigma^{-1}\cr u_N^{T}=(\Sigma^{-1}\sum_{i=1}^{N}x_i^{T}+\mu_0^{T}\Sigma_0^{-1})\Sigma_N
+    \end{cases}
+    \end{eqnarray}
+    In terms of the equation of the matrix ,we have:
+    \begin{equation*}
+    \begin{split}
+    \Sigma_N &=(\Sigma_0^{-1}+(\dfrac{1}{N}\Sigma)^{-1})^{-1}\\
+    &=\Sigma_0(\Sigma_0+\dfrac{1}{N}\Sigma)^{-1}\dfrac{1}{N}\Sigma\\
+    &=\Sigma_0(N\Sigma_0+\Sigma)^{-1}\Sigma
+    \end{split}
+    \end{equation*} 
+    \begin{equation*}
+    \begin{split} 
+    \mu_{N}^{T}&=(\Sigma^{-1}\sum_{i=1}^{N}x_i^T+u_0^T\Sigma_0^{-1})\cdot \Sigma_0(N\Sigma_0+\Sigma)^{-1}\Sigma\\
+    &=\sum_{i=1}^{N}x_i^T(N\Sigma_0+\Sigma)^{-1}\Sigma_0+\mu_0^T(N\Sigma_0+\Sigma)^{-1}\Sigma\\
+    &=\Sigma_0(N\Sigma_0+\Sigma)^{-1}\sum_{i=1}^{N}x_i+\Sigma(N\Sigma_0+\Sigma)^{-1}\mu_0
+    \end{split}
+    \end{equation*}
+\section{Ex4}
+\subsection{(1)}
+The maximum likelihood estimation of the mean of the normal distribution $\mu$ is $\hat{\mu}=\dfrac{1}{N}\sum_{i=1}^{N}x_i$.So,we have:
+\begin{equation*}
+    E[\hat{\mu}]=E[\dfrac{1}{N}\sum_{i=1}^{N}]=\dfrac{1}{N}\sum_{i=1}^{N}\mu =\mu
+\end{equation*}
+So the $\hat{\mu}$ is ubbiased estimation.
+\subsection{(2)}
+The maximum likelihood estimation of the variance of  the normal distribution $\sigma^2$ is $\hat{\sigma}^2=\dfrac{1}{N}\sum_{i=1}^{N}(x_i-\hat{\mu})^2$.
+So:
+\begin{equation*}
+    \begin{split}
+        E[\hat{\sigma}^2]&=E[\dfrac{1}{N}\sum_{i=1}^{N}(x_i-\hat{\mu})^2]\\
+                         &=E[\dfrac{1}{N}\sum_{i=1}^{N}x_i^2-\hat{\mu}^2]\\
+                         &=\dfrac{1}{N}\sum_{i=1}^{N}(\sigma^2+\mu^2)-(\dfrac{\sigma^2}{N}+\mu^2)\\
+                         &=\dfrac{N-1}{N}\sigma^2\neq\sigma^2
+    \end{split}
+\end{equation*}
+So $\hat{\sigma}^2$ is not a ubbiased estimation.
+\section{Ex5}
+\subsection{(1)}
+\begin{equation*}
+\begin{split}
+\lim\limits_{N\rightarrow\infty}E[\hat{p}_N(x)]&=\lim\limits_{N\rightarrow\infty}E[\dfrac{1}{NV_N}\sum_{i=1}^{N}\phi(\dfrac{x-x_i}{h_N})]\\
+&=E[\lim\limits_{N\rightarrow\infty}\sigma_N(x-x_i)]\\
+&=\int \delta(x-V)p(V)dv\\
+&=p(x)
+\end{split}
+\end{equation*}
+\subsection{(2)}
+\begin{equation*}
+\begin{split}
+\lim\limits_{N\rightarrow \infty}Var[\hat{p}_N(x)]&=\lim\limits_{N\rightarrow \infty}{E\hat{p}^2_N(x)-(E\hat{p}_N(x))^2}\\
+&=\lim\limits_{N\rightarrow\infty}E[\dfrac{1}{NV_N}\sum_{i=1}^{N}\phi(\dfrac{x-x_i}{h_N})\dfrac{1}{NV_N}\sum_{j=1}^{N}\phi(\dfrac{x-x_j}{h_N})]
+-[\lim\limits_{N\rightarrow\infty}E\hat{p}_N(x)]^2\\
+&=\dfrac{1}{N^2}E[\lim\limits_{N\rightarrow\infty}\dfrac{1}{V_N}\sum_{i=1}^{N}\phi(\dfrac{x-x_i}{h_N})\lim\limits_{N\rightarrow\infty}\dfrac{1}{V_N}\sum_{j=1}^{N}
+\phi(\dfrac{x-x_j}{h_N})]-p^2(x)\\
+&=E[\lim\limits_{N\rightarrow\infty}\delta_N(x-V_1)\delta(x-V_2)]-p^2(x)\\
+&=E(\delta(x-V_1)\delta(x-V_2)-p^2(x)\\
+&=\int\delta^2(x-V)^2p^2(V)dv-p^2(x)\\
+&=p^2(x)-p^2(x)\\
+&=0
+\end{split}
+\end{equation*}
 \end{document}
