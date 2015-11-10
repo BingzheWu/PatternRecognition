@@ -1,0 +1,18 @@
+@article{lecun1998,
+  title={Gradient-based learning applied to document recognition},
+  author={LeCun, Yann and Bottou, L{\'e}on and Bengio, Yoshua and Haffner, Patrick},
+  journal={Proceedings of the IEEE},
+  volume={86},
+  number={11},
+  pages={2278--2324},
+  year={1998},
+  publisher={IEEE}
+}
+@article{Krizhevsky2012ImageNet,
+	title={ImageNet Classification with Deep Convolutional Neural Networks},
+	author={Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+	journal={Advances in Neural Information Processing Systems},
+	volume={25},
+	pages={2012},
+	year={2012},
+}

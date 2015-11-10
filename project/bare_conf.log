@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.18)  27 OCT 2015 15:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.18)  27 OCT 2015 20:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -261,31 +261,27 @@ Underfull \hbox (badness 1406) in paragraph at lines 499--502
 []\OT1/ptm/m/n/10 A stack of con-vo-lu-tional lay-ers (which has a dif-fer-
  []
 
+<vgg.png, id=10, 217.81375pt x 421.07312pt>
+File: vgg.png Graphic file (type png)
+ <use vgg.png>
+Package pdftex.def Info: vgg.png used on input line 510.
+(pdftex.def)             Requested size: 201.60077pt x 389.7307pt.
 
-LaTeX Warning: File `vgg.png' not found on input line 510.
-
-
-! Package pdftex.def Error: File `vgg.png' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.510 ...udegraphics[width=0.8\linewidth]{vgg.png}
-                                                  }
-Using draft setting for this image.
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 510.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[2 <./convolve.png>]
+[2 <./convolve.png>] (./bare_conf.bbl
+Underfull \hbox (badness 10000) in paragraph at lines 4--8
+[]\OT1/ptm/m/n/8 J. Deng, A. Berg, S. Satheesh, H. Su, A. Khosla, and
+ []
+
+
+Underfull \hbox (badness 6542) in paragraph at lines 4--8
+\OT1/ptm/m/n/8 Fei-Fei.  Large scale vi-sual recog-ni-tion chal-lenge.  In \OT1
+/ptm/m/it/8 In
+ []
+
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -297,32 +293,31 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[3
-
-] (./bare_conf.aux) ) 
+[3 <./vgg.png>] (./bare_conf.aux) ) 
 Here is how much of TeX's memory you used:
- 2471 strings out of 493105
- 40179 string characters out of 6137071
- 107356 words of memory out of 5000000
- 5928 multiletter control sequences out of 15000+600000
- 33522 words of font info for 64 fonts, out of 8000000 for 9000
+ 2449 strings out of 493105
+ 39872 string characters out of 6137071
+ 108371 words of memory out of 5000000
+ 5907 multiletter control sequences out of 15000+600000
+ 34143 words of font info for 63 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 37i,12n,24p,463b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
-}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-
+ 37i,12n,24p,463b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvi
+ps/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+ex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
-/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (3 pages, 166448 bytes).
+pe1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
+tmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on bare_conf.pdf (3 pages, 228614 bytes).
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
+ 67 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

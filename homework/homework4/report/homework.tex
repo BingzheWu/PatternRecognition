@@ -1,0 +1,72 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Wu Bingzhe\\1200010666\\The School of mathmatical science}
+\title{Pattern Recognition homework\\Chapter 4}
+\begin{document}
+	\maketitle
+	\section{Ex1}
+	
+	According to $x_j\in R_i,j=1,2$,we have :
+	\begin{equation}
+	g_i(x_j)\leq(\geq)0
+	\end{equation}
+	In terms of $g(\lambda x_1+(1-\lambda)x_2)=\lambda g(x_1)+(1-\lambda)g(x_2)$, combine (1) and $0\leq\lambda\leq 1$,we get:
+	\begin{equation}
+	g(\lambda x_1+(1-\lambda)x_2)\leq(\geq)0
+	\end{equation}	
+	So the decision area is convex 
+	\section{Ex2}
+	\subsection{(a)}
+	The projection of $x_a$ can be represented as :
+	\begin{equation}
+	x_a=x_p+r\dfrac{\omega}{\|\omega\|}
+	\end{equation}
+	Where $x_p$ is the projection point on the hyperplane ,$r$ is the distance between the $x_a$ and
+	the hyperplane $g(x)=0$.
+	
+	Because the point $x_p$ is on the hyperplane ,we have $g(x_p)=0$.Further more:
+	\begin{equation*}
+	\begin{split}
+		g(x_a)&=\omega^Tx_a+\omega_0\\
+		&=\omega^T(x_p+r\dfrac{\omega}{\|\omega\|})+\omega_0\\
+		&=g(x_p)+r\|\omega\|\\
+		&=r\dfrac{\omega}{\|\omega\|}
+	\end{split}
+	\end{equation*}
+	So we get $r=\dfrac{|g(x_a)|}{\|\omega\|}$
+	
+	On the other hand,for an arbitrarily point $x_q$ on the hyperplane ,
+	\begin{equation*}
+	\begin{split}
+	\|x_q-x_a\|^2&=\|x_q-x_p+x_p-x_a\|^2\\
+	&=\|x_q-x_a\|^2+r^2+(x_q-x_p)(x_p-x_a)\\
+	&=\|x_q-x_a\|^2+r^2\\
+	&\geq r^2
+	\end{split}
+	\end{equation*}
+	The conclusion established.
+	\subsection{(b)}
+	In terms of $r=\dfrac{g(x_a)}{\|\omega\|}$ , combine (3) ,we can get the projection of $x_a$ is :
+	\begin{equation*}
+	x_p=x_a-\dfrac{g(x_a)}{\|\omega\|^2}\omega
+	\end{equation*} 
+\section{Ex3}
+\subsection{(a)}
+Assumption $y_i$ satisfy $a^Ty_i\geq b$,hence,we have $a^Ty_i\geq b\geq 0$.
+So after bringing the $b$,the solution area is located in the original problem area.
+\subsection{(b)}
+The boundary of the solution after bringing the $b$ is a  hyperplane $a^Ty_i=b$,and the original boundary is another hyperplane $a^Ty_i=0$.
+So the distance between the two hyperplane is $d=\dfrac{b}{\|y_i\|}$
+\section{Ex4}
+
+The criterion function of perceptron has the form :
+\begin{equation*}
+J(a)=\sum_{y\in Y}(-a^ty)
+\end{equation*}
+\section{Ex5}
+\section{Ex6}
+\end{document}
