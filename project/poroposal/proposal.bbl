@@ -1,0 +1,21 @@
+\begin{thebibliography}{1}
+
+\bibitem{Deng2012Large}
+J.~Deng, A.~Berg, S.~Satheesh, H.~Su, A.~Khosla, and Fei-Fei.
+\newblock Large scale visual recognition challenge.
+\newblock In {\em In http://www.imagenet.org/challenges/LSVRC/2012/index},
+  2012.
+
+\bibitem{jia2014caffe}
+Y.~Jia, E.~Shelhamer, J.~Donahue, S.~Karayev, J.~Long, R.~Girshick,
+  S.~Guadarrama, and T.~Darrell.
+\newblock Caffe: Convolutional architecture for fast feature embedding.
+\newblock {\em arXiv preprint arXiv:1408.5093}, 2014.
+
+\bibitem{Krizhevsky2012ImageNet}
+A.~Krizhevsky, I.~Sutskever, and G.~E. Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock {\em Advances in Neural Information Processing Systems}, 25:2012,
+  2012.
+
+\end{thebibliography}
