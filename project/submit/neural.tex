@@ -22,68 +22,49 @@
     的轮廓会越来越清晰，但是一些图片的细节会损失。根据卷积神经网络这个特点，我们在提取一张图片的具体内容（就是图片里面的一些物体，比如建筑，动物等）的时候，我们只需要根据每一个卷积层得到的特征图（即上一层图片进过这层卷积得到的图片），对特征图进行重建，我们就可以提取图片中
     内容的信息。在这次的期末项目中，我们主要利用网络中深层所得到的特征图进行重建得到图片的内容的信息。
 	
-    另一方面，为了提取一幅绘画作品的风格特征，
-    To obtain a representation of the style of an input image ,we use a featOn the ure
-	space originally designed to capture texture information.This feature space we used is built on top of the filter responses in each layer of the network
-	.It consists of the correlations between the different filter responses over the spatial extent of the feature maps.(See Implementation for details).By including the feature correlations of multiple layers,we obatain a multi-scale representation of the input image ,which captures its style information but not the details of content and its arrangement.
+    另一方面，为了提取一幅绘画作品的风格特征，在项目中我们设计了一个基于原始图片纹理信息的特征空间。我们使用的这一个特征空间
+    建立在卷积神经网络每一层的特征图上，它们由这些特征图之间的相关性组成，通过这种取特征图之间相关性的做法（详细见方法篇），我们可以获得原始绘画作品的风格特征而不是画中具体的物体信息和物体之间的布局信息。
+    为了方便，在下文中，我们将这样构建的特征空间称为风格特征空间。
+
+    这样，有了上面的风格特征空间，我们可以在风格特征空间上通过一些方法重建一幅图片，使得这幅图片可以与原始的绘画作品的风格匹配。
 	
-	Again,we can visualise the information captured bt these style feature spaces built on different layers of the network by construction an image that matches the style representation of a given input image .Indeed reconstruction from the style features from the style features produce 
-	texturised versions of the input image that capture its general appearance in 
-	terms of color and localised structures.Moreover,the size and complexity of local image structures from the input image increases along the hierarchy,a result that can be explained by the increasing receptive field sizes and feature complexity.We refer to this multi-scale representation as style representation.
+	在这次的期末项目中，我们可以通过上面的方法分别获得一张图片的内容以及一张绘画作品的艺术风格，将它们混合在一起得到一张全新的图片。在项目中我们设计了一个基于原始图片纹理信息的特征空间中，为了展示这个效果，我们会将自己拍摄的一些图片和一些著名画家的油画作品的风格融合，具体的
+    效果见实验结果.
+
+    上面提到的图像的合成i(即一张图片的内容结合绘画作品的风格)是通过这样的方法：初始化一张白噪声图片，然后定义误差函数，即给定一张图片，
+    这张图片与原始图片的内容的误差，以及和原始绘画作品的风格误差函数，训练的时候通过梯度下降法，最小化所定义的误差函数，这样初始化的那张
+    白噪声图片就可以通过迭代形成最后我们想要得到的两种图片的融合。
 	
-	In this project ,we can manipulate both representation independently to produce new meaningful image.To demonstrate this work,we generate image mix 
-	the content and style representation from two different source images.In particular.
-	
-	The images are synthesised by finding an image that simultaneously matches the
-	content representation of the photograph and the style representation of the
-	respective piece of art.While the global arrangement of the original photograph is preserved,the colors and local structures that compose the global scenery are provided by the artwork.Effectively,this renders the photograph in the style of the artwork,such that the apperance of the synthesised image resembles the work of art,even though it shows the same content as photograph.
-	
-	Of course,image content and style cannot be completly disentangled.When synthesising an image that combine 
-	the content of one image whit the style of another image,there usually does not exist an image that perfectly 
-	matches both constrains at the same time.However,the loss function we minimise during image synthesis cotains
-	two terms for content and style respectively,that are well separated.We can therefore smoothly regulate 
-	the emphasis on either reconstructing the content or the style.
-	
-	In my final project ,we set up an artificial system that achieves a separation
-	of image content from style,thus allowing to recast the content of one image in the style of any other image. We demonstrate this by creating new,artistic images that combine the style of several well-known paintings with the content of an arbitrarily chosen photograph that I take.In particular,we derive the neural representations for the content and style of an image from the feature responses of high-performing Deep Neural Networks trained 
-	on object recognition.
-	
-	As outlined above, 
-	
-	The rest of the report is organized as follows :Section 2 provides a background for CNN and VGG model,and also described the datasets for training model we used.Section 3 presents our described the 
-	method we used .Section 4 describes implementation details.Section5 shows our
-	experiment result.
-	\section{BACKGROUND}
-	\subsection{DATASETS}
-	ImageNet is a dataset of over 15 million labeled high-resolution images belong to roughly 22,000 categories.The images were collected from teh web and labeled by human labelers using Amazon's Mechanical Turk crowd-sourcing tool.Staring in 2010 ,as part of the Pascal Visual Object Challenge,an annual competition called the ImageNet Large-Scale Visual Recognition Challenge (ILSVRC) has benn held.ILSVRC uses a subset of ImageNet with roughly 1000
-	images in each of 1000 categories.In all,there are roughly 1.2 million training images,50,000 validation images,and 150,000 testing images.
-	
-	ImageNet consists of variable-resolution images,while our system requires a constant input dimensionality .In our training process,we down-sampled the images to a fixed resolution of $256\times 256$.Given a image , we first rescaled 
-	the image such that the shorter side was of length 256,and then cropped out the central $256\times 256$ patch from the resulting image.We did not pre
-	-process the images in any other way,except for subtracting the mean activity over the training set from each pixel.
-	Then we use these picture for 
-	training a VGG19(see it in next subsection) model by Caffe\cite{jia2014caffe}(A deeplearning framework).
-	
+    当然一幅图像的风格和内容是不可能完全分离开的，比如名画呐喊中的风格和图中出现的那个个人。当我们进行上述的图片合成的时候，
+    我们不会得到一张图片，它既完美匹配一张图片的内容，又和给定的绘画作品的风格匹配得很好。这里就存在一个平衡点，在项目中为了寻找
+    这个平衡点，我们主要通过改变我们的误差函数中风格误差和内容误差的系数得到。
+
+    在这次项目中，我们基于一台带GPU（Titan X）的实现了一个自动的智能系统，输入两张图片（一张是你想要的内容和另一张你想要的风格），得到
+    一张融合两种图片的全新的图片。我们使用的神经网络模型是2014年获得ImageNet挑战赛冠军使用的模型VGGNET。
+    
+    这个报告的其余部分由下述的部分组成：第二个小节介绍关于卷积神经网络的基本理论和VGGNET这个模型的基本结构，在第二节中也会对我们
+    使用的数据集（ImageNet DataSet）进行介绍。第三小节会对我们使用的图片生成方法进行严格的数学描述。第四小节会介绍我们实现这个智能系统
+    的具体实现细节（包括网络的训练和合成图片的训练）。第四小节展示了最后实验的一些结果。
+	\section{背景}
+	\subsection{数据集合}
+    ImageNet 图片数据库由 1500,0000 张标注图片组成，这些图片一共有22000个类别。这些图片通过亚马逊的标注系统人工标注。2010年，一项基于这个
+    数据集合的大规模图像识别比赛（ILSVRC）开始举办，这个比赛选取ImageNet图片库的一个子集，这个子集有1000类图片，120000张训练图片我们项目中使用的
+    神经网络模型就是基于这个图片库进行训练。
+
+    这个数据库的图片有各种大小，所以在训练之前，我们对图片进行了预处理，基于线性插值的方法将每张训练图片下采样到 256*256.除了下采样，我们不对图片做任何其他的预处理。完成图片预处理之后，我们使用开源的深度学习框架Caffe\cite{jia2014caffe}训练我们的VGG 网络模型。
 	\subsection{CNN Basics}
-	Convolutional neural network (CNN) is first inspired by research in 
-	neuroscience.After over twenty years of convolution,CNN has been gaining 
-	more and more distinction in research fields,such as computer vision,pattern
-	recognition ,NLP.As a classical supervised learning algorithm,CNN employs 
-	a feedforward process for recognition and backward path for training.
+    卷积神经网络最早是受神经科学的启发而产生的（猫的大脑皮层的感受野是基于局部感知的）\cite{Hubel1962Receptive}。
+    1998年Lecun提出了最早的卷积神经网络的结构LeNet用于手写字体的识别上，达到了商用标准。随着21世纪后GPU通用计算的发展，以及一些大型
+    标注图片库的出现，CNN出现在了计算机视觉的领域内，在2012年的ImageNet 挑战赛上，多伦多大学的一个组使用了一个深层的卷积神经网络结构获得了第一名，与使用传统计算机视觉方法的第二名拉出了很大距离。
+	自此卷积神经网络开始应用到一些传统的领域（比如模式识别，自然语言处理）。
+
+    与传统的人工神经网络的结构相比，卷积神经网络采用权值共享和稀疏连接的策略大大减小了反向传播算法的计算量，也降低了模型的复杂度。
+一个典型的卷积神经网络有两部分构成：一个特征提取器和一个分类器。特征提取器即为多层的卷积层，它将输入的图片通过卷积和
+下采样等方式得到一系列原始图片的特征（保存在一系列特征图中），训练卷积神经网络就是完成计算机对图片的特征的提取，而不需要人工去
+构造特征。这些提取的特征将会被送到分类器当中（通用的有SVM和多层感知器），达到对图片识别的效果。
 	
-	
-	A typical CNN is composed of two components : a feature extractor and a classifier . The feature extractor is used to filter input images into 
-	feature maps that represent various features of the image.These features may 
-	include corners,lines,circular arch,etc.,which are relatively invariant to
-	position shifting or distortions.The output of the feature extractor is a low-dimensional vector containing these features.This vector is then fed into the classifier ,which is usually based on traditional artificial neural 
-	networks.The purpose of this classifier is to decide the likelihood of 
-	categories that the input image might belong to.
-	
-	A typical CNN is composed of multiple computation layers.For example,the feature extractor may consist of several convolutional layers and 
-	optional sub-sampling layers.Figure 1 illustrates the computation of a convolutional layer.The convolutional layer receives $N$ feature maps as input.Each input feature map is convolved by a shifting window is S,which 
-	is normally smaller than K.A totel of M output feature maps will form the 
-	set of input feature maps for the next convolutional layer.  
-	
+一个卷积神经网络通常有多层结构。特征提取器就由多层卷积层和采样层构成，每一层的输入均为上一层通过卷积所得到的特征图。图一展示了一个典型
+的卷积神经网络，卷积层接受 N 个特征图作为输入，每一个输入特征都与一个卷积核S做卷积，总共输出M(M对应与卷积核的个数)个特征图作为下层卷积层的输入。
 	\begin{figure}[h]
 		\centering
 		{\includegraphics[width=0.8\linewidth]{convolve.png}}
@@ -92,67 +73,74 @@
 	\end{figure}
 	\subsection{VGG Model}
 	\subsubsection{ARCHITECTURE}
+    VGG 网络模型是一个卷积神经网络模型，他在一项图片识别的任务中达到了类人的表现，它的详细介绍可以参\cite{Simonyan2014Very}.
 	
-	VGG model is a convolutional neural network that rivals human performance 
-	on a common visual object recognition benchmark task and was introduced and 
-	extensively described in\cite{Simonyan2014Very}. 
+    在这次的期末项目中，我们使用\cite{Simonyan2014Very}中介绍的网络模型，将其应用于对我们数据集的训练。在训练的时候，输入图片的
+    大小固定在225*225 ,图片为RGB格式，即有三个颜色通道。我们对图片进行如下的预处理:
+    
+    将图片通过线性插值的方法固定在网络输入所要求的大小,然后将图片每一个像素点的数值做归一化处理。
 	
-	In this project ,we used VGG\cite{Simonyan2014Very} models for training.During training,the input
-	to this ConvNets is a fixed-size $224\times224$ RGB image.The only pre-processing we do is subtracting the mean RGB value,computed on the training set,from each pixel .The image is passed through a stack of 
-	convolution layers,where we use filters with a very small receptive field
-	:$3\times 3$(which is the smallest size to capture the notion of left/right,
-	up/down,center).In one of the configurations we also utilise $1\times1$ convolution filters,which can be seen as a linear transformation of the
-	input channels(followed by non-linearity).The convolutional stride is fixed 
-	to 1 pixel ; the spatial padding of conv.layer input is such that the spatial
-	resolution is preserved after convolution,i.e.the padding is 1 pixel for $3\times 3$ conv.layers.Spatial pooling is carried out by five max-pooling
-	layers,which follow some of the conv.layers(not all the conv.layers are followed by max-pooling).Max-pooling is performed over a $2\times 2$ pixel 
-	window,with stride 2.
+    不同于一些其他的卷积神经网络模型（比如AlexNet，LeNet），在VGG 的网络结构中，它的卷积核的维数很小，每一层卷积层的卷积核均为
+    $3\times3$ (这已经是一个二维卷积所能达到的最小了，再小就是对图片的线性变化了)。在VGG的卷积层中，卷积核滑动的步长固定，在项目中
+    我们取了符合二维卷积数学定义的1。模型的下采样层我选择了局部最大化采样，即在一个图像的局部选取局部像素值最大的一点代表这个局部
+    的情况，这样可以达到对特征图降维的目的,下采样的范围定为2*2 ,即在特征图的每个2*2的像素块进行下采样。在\cite{Simonyan2014Very}描述的
+    结构中，除了上述的卷积层和下采样层，之后还有三个全连接层（即传统的人工神经网络结构）进行对之前提取特征
+    的分类,但是在我们的项目中，由于只需要将原始输入图片的特征提取出来即可，不需要分类，所以我们去掉了网络中的全连接层。
 	
-	A stack of convolutional layers (which has a different depth in different 
-	architectures) is followed by three Fully-Connected(FC) layers.However in our 
-	project ,teh full-connected layers was removed .
+    所有隐含层使用的激活函数都是 ReLU，即 $ max(0,x)$。（也可以使用传统的比如sigmod函数，通过实验发现不同的激活函数差别不大）
 	
-	All hidden layers are equipped with the rectification(ReLU) non-linearity.
-	We note that none of our networks (except for one) contain Local Response
-	Normalisation (LRN) normalisation.
-	
-	The Convnet we used in the project are shown in Figure2
+    整个VGG 一共有16层卷积层，5个下采样层。
+	整个网络的结构可以在宏观上展现为图二中的结构：
 	\begin{figure}[h]
 		\centering
 		{\includegraphics[width=0.8\linewidth]{vgg.png}}
 		\caption{Graph of a convolutional layer}
 		%	\label{fig_convolve}
 	\end{figure}
-	\section{Methods}
-	The results presented in our project were generated on the basis of 
-	the VGG-Model(see details in section 2).We used the feature space provide
-	by the 16 convolutional and 5 pooling layers of the 19 layer VGG-Network(
-	see the architecture in Figure 2).We do not use any of the fully connected layers.The model is publicly available and can be explored in the caffe-framework. For image synthesis we found that replacing the max-pooling operation by average pooling improves the gradient flow and one obtains slightly more appealing rsults,which is why the images shown were generated 
-	whit average pooling.
+	\section{方法}
+    我们实验最后展现出来的结果是基于VGG的网络结构（见第二小节），在项目中我们会使用16个卷积层提供的特征来得到图片的内容
+    和风格。我们不使用网络最后的全连接层。我们还会改变一些原来网络中下采样层的一些结构。下面分两个方向，即模型的训练和图片的
+    合成两个方向来进行说明。
+    \subsection{模型训练}
+    我们在项目中使用深度学习的开源框架Caffe对数据集进行训练，针对大数据量的训练（我们最后训练使用的图片的存储大小为168个G），
+    我们使用了GPU进行计算，在训练之前，也将所有的图片创建为一种高性能的存储格式（lmdb）。在这里列出我们训练的一些主要参数：
+    初始学习率为0.01,初始动量为0.9,初始的权重分布选取为高斯分布，使用的优化算法为随机梯度下降法。最后训练完成的模型以
+    google protobuffer的协议存储在二进制文件当中，之后通过lua中的loadcaffe模块调用模型文件。
+    \subsection{合成图片}
+    我们可以将卷积神经网络中的每一层的卷积核看为一个滤波器，图片与每个卷积核的卷积运算就可以当成是对
+    图像的滤波下面引入一些记号。
+    我们对网络其中一层卷积层（第l层卷积）引入记号即可，其他层类似。$N_l$ 个滤波器（即有$N_l$个卷积核，每个卷积核分别可以获得一种图像的特征），记这些卷
+    积核展开为一维向量过后大小为 $M_l$,其中 $M_l$ 就是二维卷积核的高乘上宽
 	
-	Generally each layer in the network defines a non-linear filter bank whose 
-	complexity increases with the position of the layer in the network .Hence a given input image $\overrightarrow{x}$is encoded in each layer of the CNN by the filter responses to that image.A layer with $N_l$ distinct filters has
-	$N_l$ feature maps each of size $M_l$,where $M_l$ is the height times 
-	the width of the feature maps. So the responses in a layer $l$ can be stored in a matrix $F^l \in R^{N_l\times M_l}$ where $F_{ij}^{l}$ is the 
-	activation of the $i^{th}$ filter at position $j$ in layer $l$.To visualise
-	the image information that is encoded at different layers of the hierachy we perform gradient descent on a white noise image to find another image 
-	that matches the feature responses of the original image.So let $\overrightarrow{p}$ and $\overrightarrow{x}$ be the original image and the image that is generated and $P^l$ and $F^l$ their respective feature 
-	representation in layer $l$.We then define the squared-error loss between the two feature representations :
+    这样 $l$层的经过滤波过后的图片可以存储在矩阵  $F^l \in R^{N_l\times M_l}$中 其中 $F_{ij}^{l}$是第
+	 $i^{th}$ 个滤波器的响应函数.
+     为了将图片的每一层特征图通过数值显式的表达出来，我们将对一个初始的白噪声图片通过梯度下降法迭代，从而寻找一副既能和一副照片的
+     内容，也和一副绘画作品的风格匹配的图片出来。在这次的期末项目中
+     我采取的算法是分别将这三张图片（即需要迭代的图片，原始的想要获得其内容的图片，原始的想要获得其
+     风格的图片）传入之前训练好的神经网络模型中然后在神经网络的每一层我们会分别获得关于这些图片的一些特征图，
+     我们在通过对他们特征图形成的特征空间进行误差的评估。
+     
+     下面分别讨论如何评价要迭代的图片和原始图片的内容的误差，与要迭代图片与原始绘画作品
+     风格的误差。
+     \subsubsection{内容误差}
+	我们分别记 $\overrightarrow{p}$ 和$\overrightarrow{x}$ 是原始的我们想要获得其内容的照片和我们想要获取其内容的照片，记  $P^l$ 和 $F^l$ 分别是它们通过VGG网络第l层时的全体特征图，这样我们就可以定义两张图片在这一层的特征之间的均方误差函数，定义式如下:
 	\begin{equation}
 	L_{content} (\overrightarrow{p},\overrightarrow{x},l)= \frac{1}{2} \sum_{ij}
 	(F_{ij}^{l}-P_{ij}^{l})^2
 	\end{equation}
-	The derivative of the loss with respect to the activations in layer $l$
-	equals
+    有上面的表达式，我们可以得到误差函数（第l层，总体的误差函数会在本节最后定义）梯度的解析表达式：
 	\begin{eqnarray}
 	\dfrac{\partial L_{content}}{\partial F_{ij}^l}=\begin{cases}
 	(F^l-P^l)_{ij} ,F_{ij}^l>0 \cr 0,otherwise
 	\end{cases}
 	\end{eqnarray}
-	from which the gradient with respect to the image $\overrightarrow{x}$ can be computed using standard error back-propagation.Thus we can change the initially random image $\overrightarrow{x}$ until it generates the 
-	same response in a certain layer of the CNN as the original image $\overrightarrow{p}$.
+	通过上面的梯度表达式，我们就可以根据误差的反向传播算法对要迭代的图片进行更新了。这样我们就可以先初始化一张随机图片（如这次项目
+    中所用的白噪声图片），然后根据反向传播算法对其迭代，直到这张图片在这一层的经过卷积过后的特征图和我们想要获得图片类容的图片的特征图
+    匹配即可。
 	
-	On top of the CNN responses in each layer of the network we built a style representation that computes the correlations between the different filter responses,where the expectation is taken over the spatial extend of the imput image.These feature correlations are given by the Gram
+    \subsubsection{风格误差}
+    为了获得一幅图片的风格误差，我们首先需要定义一张图它的不同特征图之间的相关性，在这次项目中，我们采用如下的定义计算。
+    On top of the CNN responses in each layer of the network we built a style representation that computes the correlatiddons between the different filter responses,where the expectation is taken over the spatial extend of the imput image.These feature correlations are given by the Gram
 	matrix $G^l \in R^{N_l\times N_l}$,where $G_{ij}^l$ is the inner product between the vectorised feature map $i$ and $j$ in layer l:
 	\begin{equation}
 	G_{ij}^{l} = \sum_k F_{ik}^lF_{jk}^l	
