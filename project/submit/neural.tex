@@ -4,6 +4,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{pdfpages}
 \author{吴秉哲}
 \title{Extracted the style from the image\\with Deep Neural Network}
 \begin{document}
@@ -87,7 +88,7 @@
     结构中，除了上述的卷积层和下采样层，之后还有三个全连接层（即传统的人工神经网络结构）进行对之前提取特征
     的分类,但是在我们的项目中，由于只需要将原始输入图片的特征提取出来即可，不需要分类，所以我们去掉了网络中的全连接层。
 	
-    所有隐含层使用的激活函数都是 ReLU，即 $ max(0,x)$。（也可以使用传统的比如sigmod函数，通过实验发现不同的激活函数差别不大）
+    所有隐含层使用的激活函数都是 ReLU\cite{Dahl2013Improving}，即 $ max(0,x)$。（也可以使用传统的比如sigmod函数，通过实验发现不同的激活函数差别不大）
 	
     整个VGG 一共有16层卷积层，5个下采样层。
 	整个网络的结构可以在宏观上展现为图二中的结构：
@@ -140,16 +141,24 @@
 	
     \subsubsection{风格误差}
     为了获得一幅图片的风格误差，我们首先需要定义一张图它的不同特征图之间的相关性，在这次项目中，我们采用如下的定义计算。
-    On top of the CNN responses in each layer of the network we built a style representation that computes the correlatiddons between the different filter responses,where the expectation is taken over the spatial extend of the imput image.These feature correlations are given by the Gram
-	matrix $G^l \in R^{N_l\times N_l}$,where $G_{ij}^l$ is the inner product between the vectorised feature map $i$ and $j$ in layer l:
+    .这些特征图之间的相关被一个格拉姆矩阵
+	 $G^l \in R^{N_l\times N_l}$给出,其中 $G_{ij}^l$ 是第l层第i个特征图与第j个特征图之间的内积，定义如下:
 	\begin{equation}
 	G_{ij}^{l} = \sum_k F_{ik}^lF_{jk}^l	
 	\end{equation}
-	To generate a texture that matches the style of a given image,In the project,we use gradient descent from a white noise image to find another image that matches the style representation of the original image.This is
-	done by minimising the mean-squared distance between the entries of the Gram matrix from the original image and the Gram matrix of the
-	image to be generated .So let $\overrightarrow{a}$ and $\overrightarrow{x}$ be the original image and the image that is generated
-	and $A^l$ and $G^l$ their respective style representations in layer l .The
-	contribution of that layer to the total loss is then 
+
+    为了生成一幅给定绘画作品的纹理特征，在这次项目中，我们类似上面寻求图片内容的方法，同样通过迭代一张初始化的白噪声图片来寻求一张
+    匹配所给绘画作品风格的图片。迭代也是被错误驱动的，通过梯度下降法最小化我们下面定义的均方误差函数。
+    
+	\begin{figure}[h]
+		\centering
+		{\includegraphics[width=0.8\linewidth]{pie.png}}
+		\caption{Graph of a convolutional layer}
+		%	\label{fig_convolve}
+	\end{figure}
+    衡量风格是否相似的误差函数被定义为被迭代图片在第l层的Gram矩阵和所想要获得其风格的绘画作品的Gram矩阵之间的二次距离.
+	o be generated .记 $\overrightarrow{a}$ 和 $\overrightarrow{x}$ 分别为原始绘画作品和要进行迭代的图片
+	 $A^l$ 和 $G^l$ 分别为他们第l层的Gram矩阵（分别代表两幅图像的风格）。那么上述的误差函数就可以如下定义（每一层的误差合在一起）：
 	\begin{equation}
 	E_l = \dfrac{1}{4N_l^2M_l^2}\sum_{i,j}(G_{i,j}^l - A_{i,j}^l)^2
 	\end{equation}
@@ -158,23 +167,63 @@
 	L_{style}(\overrightarrow{a},\overrightarrow{x})= \sum_{l=0}^{L}\omega_l
 	E_l
 	\end{equation}
-	where $\omega_l$ are weighting factors of the contribution of each layer to the total loss.The derivative of $E_l$ with respect to the activations 
-	in layer l can be computed by this:
+	
+    其中 $\omega_l$ 表示这一层误差函数在总体风格误差中所占的比重。有上述表达式，我们可以直接求得误差函数的梯度的解析表达式.
+	:
 	\begin{equation}
 	\dfrac{\partial E_l}{\partial F_{ij}^l}= \dfrac{1}{N_l^2M_l^2}((F^l)^T(G^l-A^l))_{ji}
 	\end{equation}
-	The gradients of $E_l$ with respect to the activations in lower layers of the network can be readily computed using standard error back-propagation
-	.
+	于是我们可以根据上述的表达式，使用反向传播算法迭代原始图片，使得它更加匹配绘画作品的风格。
 	
-	To generate the image that mix the content of a picture with the style of a
-	painting we jointly minimise the distance of a white noise image from the
-	content representation of the photograph in onelayer of the network and the style representation of the painting in a number of the CNN.So let 
-	$\overrightarrow{p}$ be the picture and $\overrightarrow{a}$ be the artwork. The loss function we minimise is :
+    \subsubsection{总体误差}
+    有了上述两种误差的定义，我们需要把它们结合起来。如果过于追去获得的图片更符合原始照片的内容，那么绘画作品的
+    风格就会体现不出来，反之，迭代的图片就会很混乱，没有内容。所以，我们需要寻求两者之间的平衡点。
+
+    类似于之前的思想，我们依旧初始化一张白噪声图片，然后通过最小化误差函数来迭代图片。下面来定义总体误差函数。
+	于是记
+    $\overrightarrow{p}$ 为想获取其内容的图片 ， $\overrightarrow{a}$ 为想要获得其风格的绘画作品. 我们要
+    极小化的误差函数如下定义:
 	\begin{equation}
 	L_{total}(\overrightarrow{a},\overrightarrow{p},\overrightarrow{x})=\alpha L_{content}(\overrightarrow{p},\overrightarrow{x})+\beta
 	L_{style}(\overrightarrow{a},\overrightarrow{x})
 	\end{equation}
-	Where $\alpha$ and $\beta$ are the weighting factors for content and style reconstruction respectively.
-	\bibliography{pattern}
+    
+	其中 $\alpha$ 和 $\beta$ 就可以表示风格和内容分别对最后的影响因子，用户可以根据自己的需求调整。
+    整个过程的流程图如图3所示(tex的图片排版是自动的，我暂时还没有找到方法调整图片的位置所以有些图片自动排到了文章末尾)：
+    
+    如图所示，代表风格和内容的两张图片，分别送入之前训练好的神经网络，用上文提到的方法，分别提取他们的风格和内容，然后迭代
+    初始的白噪声图片，得到最后的结果。
+
+    图中展示的绘画作品为梵高的星空（我们要提取它的风格），要提取的内容为河边的建筑，它们分别经过我们提前训练好的神经网络，
+    在每一层卷积层我们都会得到它们的一系列的特征图，然后根据方法章节介绍的误差函数，我们对一张初始化的白噪声图片迭代，就可以
+    得到我们最后的图片。在这次项目中，我们提取内容时，选择的误差函数来自第四层卷积层，而在提取绘画作品的风格的时候我们选择
+    第一到五层的误差函数结合。然后将两种误差函数按上一个章节的总体误差函数结合，就可以得到总体的误差函数。最后实验的效果会在
+    下一小节展示。
+    
+    
+    
+    \section{实验结果}
+    在这次期末项目中，为了展示这个算法的效果，我选取四张照片分别融合凡高的星空和挪威画家蒙克的呐喊的风格。通过修改代码，我们 
+    还可以让一幅画融合不同风格的照片。
+
+    首先展示的是一张图片（我们想要获取其内容）和一幅绘画作品（我们想要获取其风格）的融合，绘画作品选取的是上文提到的星空和呐喊。
+    效果如图四所示（在报告末尾）。
+	\begin{figure}[h]
+		\centering
+		{\includegraphics[width=1\linewidth]{onestyle.png}}
+		\caption{Graph of results}
+		%	\label{fig_convolve}
+	\end{figure}
+    我们还尝试了融合多种风格，得到了图5所示的效果：
+	\begin{figure}[h]
+		\centering
+		{\includegraphics[width=1\linewidth]{style.png}}
+		\caption{Graph of results}
+		%	\label{fig_convolve}
+	\end{figure}
+
+
+    我们还尝试了融合多种风格，得到了如下所示的效果：
+    \bibliography{pattern}
 	\bibliographystyle{abbrv}
 \end{document}

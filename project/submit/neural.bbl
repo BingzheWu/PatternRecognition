@@ -1,5 +1,12 @@
 \begin{thebibliography}{1}
 
+\bibitem{Dahl2013Improving}
+G.~E. Dahl, T.~N. Sainath, and G.~E. Hinton.
+\newblock Improving deep neural networks for lvcsr using rectified linear units
+  and dropout.
+\newblock In {\em IEEE International Conference on Acoustics, Speech & Signal
+  Processing}, pages 8609--8613, 2013.
+
 \bibitem{Deng2012Large}
 J.~Deng, A.~Berg, S.~Satheesh, H.~Su, A.~Khosla, and Fei-Fei.
 \newblock Large scale visual recognition challenge.
